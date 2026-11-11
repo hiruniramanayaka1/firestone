@@ -1,3 +1,9 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 2 optimizations:
+# - [MEDIUM] Add concurrency group to "pr-build.yml"
+# - [LOW] Use shallow clone in "build" job
+# Estimated savings: ~2 min/run
+#
 name: PR Build Check
 
 on:
@@ -6,6 +12,10 @@ on:
         branches:
             - '*'
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
     build:
         runs-on: ubuntu-latest
